@@ -18,6 +18,9 @@
   "name": "whatsapp-bot",
   "version": "1.0.0",
   "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
   "dependencies": {
     "whatsapp-web.js": "^1.21.0",
     "qrcode-terminal": "^0.12.0"
