@@ -1,6 +1,4 @@
 {
-  "build": {
-    "builder": "npm"
-  },
+  "build": {},
   "start": "npm start"
 }
