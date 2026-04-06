@@ -10,7 +10,7 @@ COPY package*.json ./
 # 4. Install dependencies
 # Use 'npm ci' for faster, reliable production installs
 #RUN npm ci --only=production
-RUN npm ci --omit=dev
+#RUN npm ci --omit=dev
 
 # 5. Copy the rest of the application code
 COPY . .
