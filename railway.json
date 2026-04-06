@@ -1,1 +1,6 @@
-RUN npm start
+{
+  "build": {
+    "builder": "npm"
+  },
+  "start": "npm start"
+}
