@@ -2,7 +2,7 @@ console.log("הקובץ התחיל לרוץ");
 
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const fs = require('fs');
-const qrcode = require('qrcode-terminal');
+const qrcode = require('qrcode');
 
 const client = new Client({
     authStrategy: new LocalAuth(),
