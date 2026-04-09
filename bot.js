@@ -128,9 +128,16 @@ function sendMessage() {
 }
 
 // QR
-client.on('qr', qr => {
-    console.log("סרקי את הקוד:");
-    qrcode.generate(qr, { small: true });
+client.on('qr', async (qr) => {
+     try {
+      // qr
+      const qrImage = await qrcode.toDataURL(qr, {width: 300});
+
+      console.log('\n סרוק את ה QR הבא:\n');
+      console.log(qrImage);
+      console.log('\n העתיקי את כל השורה לדפדפן ☝️\n');
+    } catch (err) {
+    console.error('שגיאה ביצירת QR:' , err);
 });
 
 // כשהבוט מוכן
