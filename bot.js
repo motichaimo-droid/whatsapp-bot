@@ -138,6 +138,7 @@ client.on('qr', async (qr) => {
       console.log('\n העתיקי את כל השורה לדפדפן ☝️\n');
     } catch (err) {
     console.error('שגיאה ביצירת QR:' , err);
+    }
 });
 
 // כשהבוט מוכן
