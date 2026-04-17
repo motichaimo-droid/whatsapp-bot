@@ -138,9 +138,16 @@ client.on('qr', async (qr) => {
 });
 
 // כשהבוט מוכן
-client.on('ready', () => {
+client.on('ready', async () => {
     console.log('הבוט מוכן ומחובר!');
-    scheduleDailyMessage();
+    const chats = await cleint.getChats();
+
+    chats.forEach(chat => {
+       if (chat.isGroup && chat.name.includes("מסילת ישרים") {
+          console.log(`שם קבוצה: ${chat.name}`);
+          console.log(`ID: ${chat.id._serialized}`);
+          console.log('-------------------');
+ scheduleDailyMessage();
 });
 
 // תזמון הודעה יומית
