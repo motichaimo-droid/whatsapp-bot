@@ -11,10 +11,14 @@ const client = new Client({
         // או להשתמש בנתיב המערכת. ננסה את הנתיב הסטנדרטי:
         executablePath: process.env.CHROME_PATH || '/usr/bin/chromium',
         headless: true,
+        proyocolTimeout: 120000,
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage'
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--no-zygote',
+            '--single-process'
         ]
     }
 });
