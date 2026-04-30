@@ -11,7 +11,7 @@ const client = new Client({
         // או להשתמש בנתיב המערכת. ננסה את הנתיב הסטנדרטי:
         executablePath: process.env.CHROME_PATH || '/usr/bin/chromium',
         headless: true,
-        proyocolTimeout: 120000,
+        protocolTimeout: 120000,
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -114,12 +114,23 @@ function sendMessage() {
         return;
     }
 
-    const myNumber = '972533632823@c.us';
-    const message = getNextPart();
-    
-    client.sendMessage(myNumber, message)
-        .then(() => console.log("הודעה נשלחה בהצלחה!"))
-        .catch(err => console.error("שגיאה בשליחה:", err));
+    if(!client.info) {
+      console.log("הלקוח לא מחובר עדיין, מדלג....");
+      return;
+    }
+
+   try {
+      const myNumber = '972533632823@c.us';
+      const message = getNextPart();
+
+      const chat = await client.getchatById(myNumber);
+      await chat.sendMessage(message)
+      client.sendMessage(myNumber, message)
+
+     console.log("הודעה נשלחה בהצלחה!");
+   } catch (err) {
+     consol.error("שגיאה בשליחה:", err);
+  }
 }
 
 // אירוע יצירת ה-QR
@@ -151,8 +162,11 @@ client.on('ready', async () => {
 });
 
 // תזמון הודעה יומית
+
 function scheduleDailyMessage() {
-    function getDelay() {
+    let nextSendTime;
+
+    function calculateNextSendTime() {
         const now = new Date();
         const next = new Date();
         next.setHours(8, 0, 0, 0);
@@ -160,15 +174,47 @@ function scheduleDailyMessage() {
         if (now > next) {
             next.setDate(next.getDate() + 1);
         }
+
+        nextSendTime = next;
         return next - now;
     }
 
-    const delay = getDelay();
+    const delay = calculateNextSendTime();
+
     console.log(`הודעה ראשונה תישלח בעוד ${Math.round(delay / 1000 / 60)} דקות.`);
 
+    // ⏱️ הדפסה כל 10 דקות
+    setInterval(() => {
+        if (!nextSendTime) return;
+
+        const now = new Date();
+        const diff = nextSendTime - now;
+
+        if (diff <= 0) return;
+
+        const minutes = Math.floor(diff / 1000 / 60);
+        console.log(`נשארו ${minutes} דקות לשליחה הבאה`);
+    }, 10 * 60 * 1000);
+
+    // ⏰ שליחה ראשונה
     setTimeout(() => {
         sendMessage();
-        setInterval(sendMessage, 24 * 60 * 60 * 1000);
+
+        // עדכון זמן השליחה הבא
+        nextSendTime = new Date();
+        nextSendTime.setDate(nextSendTime.getDate() + 1);
+        nextSendTime.setHours(8, 0, 0, 0);
+
+        // שליחה יומית
+        setInterval(() => {
+            sendMessage();
+
+            nextSendTime = new Date();
+            nextSendTime.setDate(nextSendTime.getDate() + 1);
+            nextSendTime.setHours(8, 0, 0, 0);
+
+        }, 24 * 60 * 60 * 1000);
+
     }, delay);
 }
 
