@@ -105,7 +105,7 @@ ${part.text}`;
 }
 
 // פונקציית השליחה
-function sendMessage() {
+async function sendMessage() {
     const now = new Date();
     const day = now.getDay(); // 0=ראשון
 
