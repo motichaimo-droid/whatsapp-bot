@@ -158,6 +158,7 @@ client.on('ready', async () => {
           console.log(`שם קבוצה: ${chat.name}`);
           console.log(`ID: ${chat.id._serialized}`);
           console.log('-------------------');
+       }
  scheduleDailyMessage();
 });
 
