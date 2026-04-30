@@ -123,8 +123,8 @@ async function sendMessage() {
       const myNumber = '972533632823@c.us';
       const message = getNextPart();
 
-      const chat = await client.getchatById(myNumber);
-      await chat.sendMessage(message)
+      const chat = await client.getChatById(myNumber);
+      await chat.sendMessage(message);
 
      console.log("הודעה נשלחה בהצלחה!");
    } catch (err) {
@@ -158,6 +158,7 @@ client.on('ready', async () => {
           console.log(`ID: ${chat.id._serialized}`);
           console.log('-------------------');
        }
+   });
  scheduleDailyMessage();
 });
 
