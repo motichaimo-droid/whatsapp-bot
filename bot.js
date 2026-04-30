@@ -120,7 +120,7 @@ async function sendMessage() {
     }
 
    try {
-      const myNumber = '972533632823@c.us';
+      const myNumber = '120363426627988217@g.us';
       const message = getNextPart();
 
       const chat = await client.getChatById(myNumber);
@@ -160,15 +160,15 @@ client.on('qr', async (qr) => {
 // כשהבוט מוכן
 client.on('ready', async () => {
     console.log('הבוט מוכן ומחובר!');
-    const chats = await client.getChats();
+  //  const chats = await client.getChats();
 
-    chats.forEach(chat => {
-       if (chat.isGroup && chat.name.includes("מסילת ישרים")) {
-          console.log(`שם קבוצה: ${chat.name}`);
-          console.log(`ID: ${chat.id._serialized}`);
-          console.log('-------------------');
-       }
-   });
+  //  chats.forEach(chat => {
+  //     if (chat.isGroup && chat.name.includes("מסילת ישרים")) {
+  //        console.log(`שם קבוצה: ${chat.name}`);
+  //        console.log(`ID: ${chat.id._serialized}`);
+  //        console.log('-------------------');
+  //     }
+  // });
  scheduleDailyMessage();
 });
 
