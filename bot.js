@@ -123,7 +123,7 @@ function sendMessage() {
       const myNumber = '972533632823@c.us';
       const message = getNextPart();
 
-      const chat = await client.getchatById(myNumber);
+      const chat = client.getchatById(myNumber);
       await chat.sendMessage(message)
       client.sendMessage(myNumber, message)
 
