@@ -123,13 +123,12 @@ function sendMessage() {
       const myNumber = '972533632823@c.us';
       const message = getNextPart();
 
-      const chat = client.getchatById(myNumber);
-      chat.sendMessage(message)
-      client.sendMessage(myNumber, message)
+      const chat = await client.getchatById(myNumber);
+      await chat.sendMessage(message)
 
      console.log("הודעה נשלחה בהצלחה!");
    } catch (err) {
-     consol.error("שגיאה בשליחה:", err);
+     console.error("שגיאה בשליחה:", err);
   }
 }
 
@@ -151,10 +150,10 @@ client.on('qr', async (qr) => {
 // כשהבוט מוכן
 client.on('ready', async () => {
     console.log('הבוט מוכן ומחובר!');
-    const chats = await cleint.getChats();
+    const chats = await client.getChats();
 
     chats.forEach(chat => {
-       if (chat.isGroup && chat.name.includes("מסילת ישרים") {
+       if (chat.isGroup && chat.name.includes("מסילת ישרים")) {
           console.log(`שם קבוצה: ${chat.name}`);
           console.log(`ID: ${chat.id._serialized}`);
           console.log('-------------------');
