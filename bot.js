@@ -124,7 +124,7 @@ function sendMessage() {
       const message = getNextPart();
 
       const chat = client.getchatById(myNumber);
-      await chat.sendMessage(message)
+      chat.sendMessage(message)
       client.sendMessage(myNumber, message)
 
      console.log("הודעה נשלחה בהצלחה!");
