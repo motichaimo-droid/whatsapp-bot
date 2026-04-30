@@ -133,7 +133,17 @@ async function sendMessage() {
 }
 
 // אירוע יצירת ה-QR
+let lastQRTime = 0;
+
 client.on('qr', async (qr) => {
+    const now = Date.now;
+    if (now - lastQRTime < 2 * 60 * 1000) {
+       console.log("QR חדש התקבל אבל מדלגים (עדיין לא עברו 2 דקות)");
+       return;
+    }
+
+    lastQRTime = now;
+
     try {
         // שימוש ב-QRcode (כמו שהוגדר למעלה) כדי ליצור לינק תמונה
         const qrImage = await QRcode.toDataURL(qr);
