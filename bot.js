@@ -105,7 +105,7 @@ ${part.text}`;
 }
 
 // פונקציית השליחה
-async function sendMessage() {
+async function sendMessage(retry = true) {
     const now = new Date();
     const day = now.getDay(); // 0=ראשון
 
@@ -114,10 +114,17 @@ async function sendMessage() {
         return;
     }
 
-    if(!client.info) {
+    if(!client.info || !client.pupPage) {
       console.log("הלקוח לא מחובר עדיין, מדלג....");
       return;
     }
+
+   const state = await client.getState();
+   if (state !== 'CONNECTED') {
+      console.log("הלקוח לא מחוכן לשליחה:", state);
+     return;
+   }
+
 
    try {
       const myNumber = '120363426627988217@g.us';
@@ -129,6 +136,10 @@ async function sendMessage() {
      console.log("הודעה נשלחה בהצלחה!");
    } catch (err) {
      console.error("שגיאה בשליחה:", err);
+     if (retry && err.message.includes('detached')) {
+       console.log("מנסה שוב בעוד 5 דקות....");
+       setTimout(() => sendMessage(false), 5000);
+    }
   }
 }
 
@@ -228,6 +239,10 @@ function scheduleDailyMessage() {
 
     }, delay);
 }
+
+client.on('disconnnected', (reson) => {
+   console.log('הבוט התנתק:' ,reason);
+});
 
 // הפעלה
 client.initialize();
